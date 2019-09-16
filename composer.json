@@ -1,0 +1,22 @@
+{
+    "name": "ahc/twigseobundle",
+    "description": "Seo element printer for twig",
+    "type": "symfony-bundle",
+    "keywords": ["twig", "html", "meta", "seo"],
+    "homepage": "https://projects.ahmetcelikezer.com/twig-seo-bundle",
+    "require": {
+        "twig/twig": "^1||^2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ahmet Celikezer",
+            "email": "ahmet@celikezer.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Ahc\\TwigSeoBundle\\": ""
+        }
+    }
+}

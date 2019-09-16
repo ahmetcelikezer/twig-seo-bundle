@@ -1,0 +1,6 @@
+services:
+
+  Ahc\TwigSeoBundle\Twig\AhcTwigSeoExtension:
+    public: false
+    tags:
+      - { name: twig.extension }

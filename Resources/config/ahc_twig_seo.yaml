@@ -8,8 +8,8 @@ ahc_twig_seo:
       tags:
         - '<meta charset="utf-8">'
         - '<meta property="og:type" content="website" />'
-        - '<meta content="IE=edge" http-equiv="X-UA-Compatible">'
-        - '<meta content="width=device-width, initial-scale=1" name="viewport">'
+        - '<meta content="IE=edge" http-equiv="X-UA-Compatible" />'
+        - '<meta content="width=device-width, initial-scale=1" name="viewport" />'
 
     favicons:
       arguments:
@@ -38,7 +38,7 @@ ahc_twig_seo:
       arguments:
           description: '%%description%%'
       tags:
-        - '<meta name="description" content="%%description%%">'
+        - '<meta name="description" content="%%description%%" />'
         - '<meta property="og:description" content="%%description%%" />'
         - '<meta name="twitter:description" content="%%description%%" />'
 

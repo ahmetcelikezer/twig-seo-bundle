@@ -7,7 +7,7 @@ This bundle includes a twig extension to print SEO meta tags easily. This is an 
 ## Installation
 You can install this bundle with composer.
 ```bash
-composer require ahc/twigseobundle
+composer require ahc/twigseobundle "^0.1.0"
 ```
 
 ## Methods

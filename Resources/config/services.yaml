@@ -2,5 +2,17 @@ services:
 
   Ahc\TwigSeoBundle\Twig\AhcTwigSeoExtension:
     public: false
+    arguments:
+      - '@ahc.twig_seo_bundle.element_manager'
     tags:
       - { name: twig.extension }
+
+  ahc.twig_seo_bundle.configuration_manager:
+    class: 'Ahc\TwigSeoBundle\Utils\ConfigurationManager'
+    arguments:
+      - '%ahc_twig_seo_config%'
+
+  ahc.twig_seo_bundle.element_manager:
+    class: 'Ahc\TwigSeoBundle\Utils\ElementManager'
+    arguments:
+      - '@ahc.twig_seo_bundle.configuration_manager'

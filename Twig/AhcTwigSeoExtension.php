@@ -2,102 +2,99 @@
 
 namespace Ahc\TwigSeoBundle\Twig;
 
+use Ahc\TwigSeoBundle\Utils\ElementManager;
+use Ahc\TwigSeoBundle\Entity\Element;
 use Twig\Extension\AbstractExtension;
 use Twig\Markup;
 use Twig\TwigFunction;
 
 final class AhcTwigSeoExtension extends AbstractExtension
 {
-    private $baseElements = [
-        '<meta property="og:type" content="website" />',
-    ];
+    /**
+     * @var ElementManager
+     */
+    private $elementManager;
 
-    private $titleElements = [
-        '<title>%title%</title>',
-        '<meta property="og:site_name" content="%title%">',
-        '<meta property="og:title" content="%title%" />',
-        '<meta name="twitter:title" content="%title%" />',
-    ];
-
-    private $descriptionElements = [
-        '<meta name="description" content="%description%">',
-        '<meta property="og:description" content="%description%" />',
-        '<meta name="twitter:description" content="%description%" />',
-    ];
-
-    private $ogImageElements = [
-        '<meta property="og:image" content="%image_path%" />',
-        '<meta name="twitter:image" content="%image_path%" />',
-        '<link rel="image_src" href="%image_path%" />',
-    ];
+    public function __construct(ElementManager $elementManager)
+    {
+        $this->elementManager = $elementManager;
+    }
 
     public function getFunctions()
     {
         return [
-            new TwigFunction('seoTitle', [$this, 'printSeoTitle', ['is_safe' => ['html']]]),
-            new TwigFunction('seoDescription', [$this, 'printDescription', ['is_safe' => ['html']]]),
-            new TwigFunction('seoBase', [$this, 'printBase', ['is_safe' => ['html']]]),
-            new TwigFunction('seoPage', [$this, 'printPageMeta', ['is_safe' => ['html']]]),
-            new TwigFunction('seoImage', [$this, 'printSeoImage', ['is_safe' => ['html']]]),
+            new TwigFunction('seo_title', [$this, 'printSeoTitle', ['is_safe' => ['html']]]),
+            new TwigFunction('seo_description', [$this, 'printDescription', ['is_safe' => ['html']]]),
+            new TwigFunction('seo_base', [$this, 'printBase', ['is_safe' => ['html']]]),
+            new TwigFunction('seo_image', [$this, 'printSeoImage', ['is_safe' => ['html']]]),
+            new TwigFunction('seo_group', [$this, 'printSeoGroup', ['is_safe' => ['html']]]),
         ];
     }
 
-    public function printSeoTitle(string $title, array $options = null): Markup
+    public function printSeoTitle(string $title): Markup
     {
-        $html = '';
+        $titleElement = new Element('default_title');
+        $titleElement->setArgumentValues([
+            'title' => $title,
+        ]);
 
-        foreach ($this->titleElements as $titleElement) {
-            $html .= str_replace('%title%', $title, $titleElement);
-        }
-
-        return self::createMarkup($html);
+        return $this->elementManager
+            ->setElement($titleElement)
+            ->registerElementArguments()
+            ->printElement()
+        ;
     }
 
     public function printDescription(string $description): Markup
     {
-        $html = '';
+        $descriptionElement = new Element('default_description');
+        $descriptionElement->setArgumentValues([
+            'description' => $description,
+        ]);
 
-        foreach ($this->descriptionElements as $descriptionElement) {
-            $html .= str_replace('%description%', $description, $descriptionElement);
-        }
-
-        return self::createMarkup($html);
+        return $this->elementManager
+            ->setElement($descriptionElement)
+            ->registerElementArguments()
+            ->printElement()
+        ;
     }
 
     public function printBase(): Markup
     {
-        $html = '';
+        $baseElement = new Element('default_base');
 
-        foreach ($this->baseElements as $baseElement) {
-            $html .= $baseElement;
-        }
-
-        return self::createMarkup($html);
-    }
-
-    public function printPageMeta(array $meta): Markup
-    {
-        $html =
-            str_replace('%title%', $meta['title'], '<title>%title%</title>').
-            str_replace('%description%', $meta['description'], '<meta name="description" content="%description%">')
+        return $this->elementManager
+            ->setElement($baseElement)
+            ->registerElementArguments()
+            ->printElement()
         ;
-
-        return self::createMarkup($html);
     }
+
 
     public function printSeoImage(string $imagePath): Markup
     {
-        $html = '';
+        $titleElement = new Element('default_og_images');
+        $titleElement->setArgumentValues([
+            'image_path' => $imagePath,
+        ]);
 
-        foreach ($this->ogImageElements as $ogImageElement) {
-            $html .= str_replace('%image_path%', $imagePath, $ogImageElement);
-        }
-
-        return self::createMarkup($html);
+        return $this->elementManager
+            ->setElement($titleElement)
+            ->registerElementArguments()
+            ->printElement()
+        ;
     }
 
-    private static function createMarkup(string $html): Markup
+    public function printSeoGroup(string $group, array $parameters, array $options = null): Markup
     {
-        return new Markup($html, 'UTF-8');
+        $customElement = new Element($group);
+        $customElement->setArgumentValues($parameters);
+
+        return $this->elementManager
+            ->setElement($customElement)
+            ->registerElementArguments()
+            ->printElement()
+        ;
     }
+
 }

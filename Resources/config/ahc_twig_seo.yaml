@@ -1,7 +1,7 @@
 ahc_twig_seo:
   groups:
 
-    base:
+    default_base:
       arguments:
           title: '%%title%%'
           description: '%%description%%'
@@ -11,21 +11,16 @@ ahc_twig_seo:
         - '<meta content="IE=edge" http-equiv="X-UA-Compatible" />'
         - '<meta content="width=device-width, initial-scale=1" name="viewport" />'
 
-    favicons:
-      arguments:
-          image_path: '%%image_path%%'
-          size: '%%size%%'
-          mime_type: '%%ext%%'
-      tags:
-        - '<link rel="icon" type="%%ext%%" sizes="%%size%%" href="%%image_path%%">'
+    # TODO: Feature loop able groups for same data
+    #default_favicons:
+    #  arguments:
+    #      image_path: '%%image_path%%'
+    #      size: '%%size%%'
+    #      mime_type: '%%ext%%'
+    #  tags:
+    #    - '<link rel="icon" type="%%ext%%" sizes="%%size%%" href="%%image_path%%">'
 
-    page:
-      arguments:
-          title: '%%title%%'
-          description: '%%description%%'
-      methods: ['title', 'description']
-
-    title:
+    default_title:
       arguments:
           title: '%%title%%'
       tags:
@@ -34,7 +29,7 @@ ahc_twig_seo:
         - '<meta property="og:title" content="%%title%%" />'
         - '<meta name="twitter:title" content="%%title%%" />'
 
-    description:
+    default_description:
       arguments:
           description: '%%description%%'
       tags:
@@ -42,9 +37,9 @@ ahc_twig_seo:
         - '<meta property="og:description" content="%%description%%" />'
         - '<meta name="twitter:description" content="%%description%%" />'
 
-    og_images:
+    default_og_images:
       arguments:
-          image_path: '%%image_path%%'
+          imagePath: '%%image_path%%'
       tags:
         - '<meta property="og:image" content="%%image_path%%" />'
         - '<meta name="twitter:image" content="%%image_path%%" />'

@@ -11,11 +11,13 @@ composer require ahc/twigseobundle
 
 ## Instructions
 - [Creating a Element Groups](#creating-custom-element-groups)
-    - [Defining Element Groups](#defining-element-groups)
-    - [Calling Other Groups](#calling-other-groups)
+    - [Defining Element Groups](#an-example-to-create-custom-element-group)
+    - [Calling Other Groups](#methods)
 - [Default Element Groups](#default-element-groups)
-    - [Base Elements](#seo-base)
-    - [Title Elements](#seo-title)
+    - [Base Elements](#base)
+    - [Title Elements](#title)
+    - [Description Elements](#description)
+    - [Og Image Elements](#og-image)
 
 ## Creating Custom Element Groups
 With this bundle, creating your own element groups to print with `seo_group` method. You can also customize the default element groups.
@@ -115,3 +117,107 @@ output will be:
 ```html
 <link rel="icon" type="image/png" sizes="16x16" href="img/assets/img/favicon.png">
 ```
+
+##### tags:
+The html tags array to print. Html tags can have a parameter(s) to replace. It should be defined between double percent signs `%%`. For example in the example configuration `%%description%%` will be replaced the data given `description` variable defined inside `arguments` in the configuration.
+
+##### methods:
+It stores the group names to run before the tags replacement. Defined methods will be printed, bu you should define all the arguments for the group(s) requires.
+
+For Example:
+```yaml
+ahc_twig_seo:
+    groups:
+      test_group:
+        arguments:
+          title: '%%title%%'
+          description: '%%description%%'
+        methods: ['default_title', 'default_description']
+
+```
+The group must contain arguments which the defined methods requires. This test_group will call `default_title` and `default_description` groups with parameters it takes.
+
+```twig
+    #seo_group([string]groupName, [json]arrayOfArguments)
+    seo_group('test_group', { title: 'Example Title', description: 'Example Description' })
+```
+
+### Default Element Groups:
+You can use default groups faster with their methods defined. However you can also customize all data default group has.
+
+To customize default groups, you can define them in `ahc_twig_seo.yaml` configuration using its group name just like you are defining brand new group but it will be overwritten with your customization.
+
+##### Base
+| Method Name   | Group Name    | Required Arguments |
+| ------------- | ------------- |------------------- |
+| seo_base      | default_base  | NULL               |
+
+```twig
+    seo_base()
+```
+This method will be print the group ```default_base```
+Default Tags the Group Has:
+```html
+    <meta charset="utf-8">
+    <meta property="og:type" content="website" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+```
+---
+##### Title
+| Method Name   | Group Name    | Required Arguments |
+| ------------- | ------------- |------------------- |
+| seo_title     | default_title | (string)title      |
+
+```twig
+    seo_title('Example Title')
+```
+This method will be print the group ```default_title```
+Default Tags the Group Has:
+```html
+    <title>%%title%%</title>
+    <meta property="og:site_name" content="%%title%%">
+    <meta property="og:title" content="%%title%%" />
+    <meta name="twitter:title" content="%%title%%" />
+```
+> The parameters between the `%%` will be replaced with the given parameter in method.
+---
+##### Description
+| Method Name     | Group Name           | Required Arguments  |
+| --------------- | -------------------- |-------------------- |
+| seo_description | default_description  | (string)description |
+
+```twig
+    seo_description('Example Description')
+```
+This method will be print the group ```default_description```
+Default Tags the Group Has:
+```html
+    <meta name="description" content="%%description%%" />
+    <meta property="og:description" content="%%description%%" />
+    <meta name="twitter:description" content="%%description%%" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+```
+> The parameters between the `%%` will be replaced with the given parameter in method.
+---
+##### Og Image
+| Method Name   | Group Name        | Required Arguments |
+| ------------- | ----------------- |------------------- |
+| seo_image     | default_og_images | (string)imagePath  |
+
+```twig
+    seo_image('absolute/path/to/img.jpg')
+```
+This method will be print the group ```default_og_images```
+Default Tags the Group Has:
+```html
+    <meta property="og:image" content="%%image_path%%" />
+    <meta name="twitter:image" content="%%image_path%%" />
+    <link rel="image_src" href="%%image_path%%" />
+```
+> The parameters between the `%%` will be replaced with the given parameter in method.
+
+## Next Version Planned Features
+1. Loop able arguments for same tag(s).
+
+

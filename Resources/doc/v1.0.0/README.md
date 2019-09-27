@@ -1,4 +1,8 @@
-# Twig Seo Bundle v2.0.0
+# Twig Seo Bundle v1.0.0 Not Usable !!!
+
+> Version 1 is buggy and not usable, use Version 2.0 instead!
+
+> This version is a major and version and is not supported by the older version(s)!
 
 This extension bundle is designed for automating to printing meta tags. You can use default meta tag groups defined by us or you can create your very own element groups with unlimited parameters to print them to your twig templates.
 ## Installation
@@ -217,4 +221,5 @@ Default Tags the Group Has:
 
 ## Next Version Planned Features
 1. Loop able arguments for same tag(s).
-2. More options and methods support for groups.
+
+

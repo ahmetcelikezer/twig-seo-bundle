@@ -24,10 +24,7 @@ class AhcTwigSeoExtension extends Extension implements PrependExtensionInterface
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yaml');
 
-        if (true === $configs['overwritable_defaults']) {
-            $config['groups'] = $this->overwriteDefaultConfigs($config);
-        }
-
+        $config['groups'] = $this->overwriteDefaultConfigs($config);
         $container->setParameter('ahc_twig_seo_config', $config);
     }
 

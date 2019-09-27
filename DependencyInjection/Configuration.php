@@ -31,7 +31,6 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-                ->booleanNode('overwritable_defaults')->defaultTrue()->end()
             ->end()
         ;
 

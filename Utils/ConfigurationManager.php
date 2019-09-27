@@ -62,9 +62,4 @@ class ConfigurationManager
 
         return $this->getGroup($group)['methods'];
     }
-
-    public function getOverwriteOption(): bool
-    {
-        return dd($this->getConfiguration('overwritable_defaults'));
-    }
 }

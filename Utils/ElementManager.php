@@ -43,7 +43,6 @@ class ElementManager
         return $this;
     }
 
-    // TODO: Parse this function as html converter from tags[array], arguments[array], argumentValues[array]
     public function registerElementArguments(): self
     {
         $convertedTags = [];
@@ -54,9 +53,7 @@ class ElementManager
         $methods = $this->element->getMethods();
 
         if (count($methods) > 0) {
-            // TODO: Make it reverse if its not work!
-            //dd($convertedTags);
-            //dd($this->getSubContents());
+
             array_push($convertedTags, $this->getSubContents(true));
         }
 
@@ -91,12 +88,7 @@ class ElementManager
         $html = '';
 
         foreach ($this->element->getContentArray() as $key=>$content) {
-            try{
-                $html .= $content;
-            } catch (\Exception $e) {
-                dd($content);
-            }
-
+            $html .= $content;
         }
 
         return $html;

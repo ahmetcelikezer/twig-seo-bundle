@@ -73,13 +73,13 @@ final class AhcTwigSeoExtension extends AbstractExtension
 
     public function printSeoImage(string $imagePath): Markup
     {
-        $titleElement = new Element('default_og_images');
-        $titleElement->setArgumentValues([
-            'image_path' => $imagePath,
+        $seoImageElement = new Element('default_og_images');
+        $seoImageElement->setArgumentValues([
+            'imagePath' => $imagePath,
         ]);
 
         return $this->elementManager
-            ->setElement($titleElement)
+            ->setElement($seoImageElement)
             ->registerElementArguments()
             ->printElement()
         ;

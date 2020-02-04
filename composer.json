@@ -5,7 +5,7 @@
     "keywords": ["twig", "html", "meta", "seo"],
     "homepage": "https://projects.ahmetcelikezer.com/twig-seo-bundle",
     "require": {
-        "twig/twig": "^1||^2"
+        "twig/twig": "^3.0.1"
     },
     "license": "MIT",
     "authors": [
